@@ -1,9 +1,14 @@
 package dev.jvoyatz.newarch.mvipoc.di
 
+import android.content.Context
 import dev.jvoyatz.newarch.mvipoc.outcome.Outcome
 import dev.jvoyatz.newarch.mvipoc.data.MoviesRepository
-import dev.jvoyatz.newarch.mvipoc.data.sources.MoviesApiService
+import dev.jvoyatz.newarch.mvipoc.data.sources.local.MoviesDao
+import dev.jvoyatz.newarch.mvipoc.data.sources.local.MoviesDatabase
+import dev.jvoyatz.newarch.mvipoc.data.sources.remote.MoviesApiService
 import dev.jvoyatz.newarch.mvipoc.domain.GetMoviesUseCase
+import dev.jvoyatz.newarch.mvipoc.domain.GetMoviesUseCaseV2
+import kotlinx.coroutines.flow.catch
 
 object AppFactory {
 
@@ -15,6 +20,19 @@ object AppFactory {
         MoviesRepository(moviesApiService)
     }
 
+
+    private lateinit var database: MoviesDatabase
+
+    val moviesDao: MoviesDao
+        get() = database.moviesDao()
+
+
+    fun initDatabase(context: Context): MoviesDatabase {
+        if(!::database.isInitialized){
+            database = MoviesDatabase.getDatabase(context)
+        }
+        return database
+    }
     val getMoviesUseCase by lazy {
         GetMoviesUseCase {
             try {
@@ -22,6 +40,16 @@ object AppFactory {
             }catch (e: Exception){
                 Outcome.Error(e.message)
             }
+        }
+    }
+
+
+    val getMoviesUseCaseV2 by lazy {
+        GetMoviesUseCaseV2 {
+            moviesRepository.getMoviesFlow(it ?: 1)
+                .catch {
+                    Outcome.Error(it.message)
+                }
         }
     }
 }

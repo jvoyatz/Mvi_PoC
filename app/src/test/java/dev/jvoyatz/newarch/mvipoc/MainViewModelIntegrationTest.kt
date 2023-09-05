@@ -4,10 +4,10 @@ import app.cash.turbine.test
 import com.google.common.truth.Truth
 import dev.jvoyatz.newarch.mvipoc.data.API_KEY
 import dev.jvoyatz.newarch.mvipoc.data.MoviesRepository
-import dev.jvoyatz.newarch.mvipoc.data.sources.MovieDto
-import dev.jvoyatz.newarch.mvipoc.data.sources.MovieResponse
-import dev.jvoyatz.newarch.mvipoc.data.sources.MoviesApiService
-import dev.jvoyatz.newarch.mvipoc.data.sources.MoviesMappers.toMovies
+import dev.jvoyatz.newarch.mvipoc.data.sources.remote.MovieDto
+import dev.jvoyatz.newarch.mvipoc.data.sources.remote.MovieResponse
+import dev.jvoyatz.newarch.mvipoc.data.sources.remote.MoviesApiService
+import dev.jvoyatz.newarch.mvipoc.data.sources.MoviesMappers.dtoToMovies
 import dev.jvoyatz.newarch.mvipoc.domain.GetMoviesUseCase
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -122,7 +122,7 @@ class MainViewModelIntegrationTest {
         //no setup needed
         val event = MainActivityContract.Event.GetMovies(1)
         val results = listOf<MovieDto>()
-        val resultsDomain = results.toMovies()
+        val resultsDomain = results.dtoToMovies()
 
         val moviesResponse = MovieResponse(1, results)
         coEvery { apiService.getTopRatedMovies(any(), any(), any()) } returns Response.success(

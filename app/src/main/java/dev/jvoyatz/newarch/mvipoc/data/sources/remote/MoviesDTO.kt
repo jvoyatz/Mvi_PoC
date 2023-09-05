@@ -1,4 +1,4 @@
-package dev.jvoyatz.newarch.mvipoc.data.sources
+package dev.jvoyatz.newarch.mvipoc.data.sources.remote
 
 const val NETWORK_PAGE_SIZE = 25
 

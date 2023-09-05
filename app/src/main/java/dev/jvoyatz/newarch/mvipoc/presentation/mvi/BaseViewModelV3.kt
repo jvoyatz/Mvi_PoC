@@ -37,21 +37,19 @@ abstract class BaseViewModelV3<State: Parcelable, PartialState, Event, Effect>(
         subscribeEvents()
     }
 
-    private fun subscribeEvents(){
+    private fun subscribeEvents() {
         viewModelScope.launch {
             _event.flatMapMerge {
                 handleEvent(it)
             }.scan(state.value) { state, newPartialState ->
                 reduceUiState(state, newPartialState)
+            }.catch {
+                Timber.d("exception $it")
+            }.collect {
+                savedStateHandle[SAVED_UI_STATE_KEY] = it
             }
-                .catch { Timber.d("exception $it") }
-                .collect {
-                    savedStateHandle[SAVED_UI_STATE_KEY] = it
-                }
         }
     }
-
-    fun state(): StateFlow<State> = state
 
     fun effect(): Flow<Effect> = effect.receiveAsFlow()
 
@@ -67,6 +65,9 @@ abstract class BaseViewModelV3<State: Parcelable, PartialState, Event, Effect>(
         }
     }
 
+    /**
+     * Processing events sequentially
+     */
     abstract fun handleEvent(event: Event): Flow<PartialState>
 
     protected abstract fun reduceUiState(

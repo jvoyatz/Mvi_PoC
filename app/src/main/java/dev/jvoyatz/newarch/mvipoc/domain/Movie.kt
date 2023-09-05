@@ -1,4 +1,4 @@
-package gr.jvoyatz.android.poc.mvi.domain
+package dev.jvoyatz.newarch.mvipoc.domain
 
 
 data class Movie(val title: String, val poster: String, val overview: String){

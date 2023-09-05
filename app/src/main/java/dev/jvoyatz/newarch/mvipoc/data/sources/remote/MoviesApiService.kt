@@ -1,4 +1,4 @@
-package dev.jvoyatz.newarch.mvipoc.data.sources
+package dev.jvoyatz.newarch.mvipoc.data.sources.remote
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -15,6 +15,14 @@ interface MoviesApiService {
         @Query("language") language: String = "en-US",
         @Query("page") page: Int
     ): Response<MovieResponse>
+
+
+    @GET("movie/top_rated")
+    suspend fun getTopRatedMovies2(
+        @Query("api_key") api_key: String,
+        @Query("language") language: String = "en-US",
+        @Query("page") page: Int
+    ): MovieResponse
 
     companion object {
 
