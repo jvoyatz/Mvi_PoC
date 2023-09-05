@@ -5,7 +5,7 @@ import com.google.common.truth.Truth
 import dev.jvoyatz.newarch.mvipoc.domain.GetMoviesUseCase
 import dev.jvoyatz.newarch.mvipoc.outcome.Outcome
 import dev.jvoyatz.newarch.mvipoc.outcome.OutcomeExtensions.toSuccessfulOutcome
-import gr.jvoyatz.android.poc.mvi.domain.Movie
+import dev.jvoyatz.newarch.mvipoc.domain.Movie
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk

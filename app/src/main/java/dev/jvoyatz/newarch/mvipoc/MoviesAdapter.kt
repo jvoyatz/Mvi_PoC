@@ -11,7 +11,7 @@ import com.bumptech.glide.Glide
 import dev.jvoyatz.newarch.mvipoc.databinding.ItemMovieBinding
 import dev.jvoyatz.newarch.mvipoc.databinding.ProgressbarBinding
 
-import gr.jvoyatz.android.poc.mvi.domain.Movie
+import dev.jvoyatz.newarch.mvipoc.domain.Movie
 
 
 class MoviesAdapter(val loadMore: () -> Unit): ListAdapter<Movie, RecyclerView.ViewHolder>(MovieItemDiffCallback) {

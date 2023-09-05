@@ -1,7 +1,7 @@
 package dev.jvoyatz.newarch.mvipoc
 
 import android.os.Parcelable
-import gr.jvoyatz.android.poc.mvi.domain.Movie
+import dev.jvoyatz.newarch.mvipoc.domain.Movie
 import dev.jvoyatz.newarch.mvipoc.presentation.mvi.UiEffect
 import dev.jvoyatz.newarch.mvipoc.presentation.mvi.UiEvent
 import dev.jvoyatz.newarch.mvipoc.presentation.mvi.UiState
@@ -45,9 +45,16 @@ object MainActivityContract {
 
     //v3
     @Parcelize
-    data class MainViewStateV2(
+    data class  MainViewStateV3(
         val isLoading: Boolean = false,
-        val movies: List<Movie> = emptyList(),
+        val movies: List<MovieUiModel> = emptyList(),
         val isError: Boolean = false
     ): Parcelable
+
+    sealed class PartialState{
+        data object Loading: PartialState()
+        data class FetchedMovies(val list: List<MovieUiModel>): PartialState()
+        data object NoResults: PartialState()
+        data class Error(val message :String): PartialState()
+    }
 }
