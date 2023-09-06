@@ -1,7 +1,7 @@
 
-** I think that in order to be able to work in a better way, you need to discuss with
+**I think that in order to be able to work in a better way, you need to discuss with
 the rest of the team to find or build custom solutions and use them again & again. Maybe one day, you
-wake up and think that it was a bad idea and come with a better solution. **
+wake up and think that it was a bad idea and come with a better solution**
 
 # Notes
 
@@ -21,7 +21,6 @@ wake up and think that it was a bad idea and come with a better solution. **
 
 Has a lot in common with MVVM, however is a more structured architecture and provides a better 
 state management. <br/>
-
 
 #### Basic Info
 
@@ -48,7 +47,7 @@ state management. <br/>
     * rendered
 
 
-##### Advantages
+#### Advantages
 * single source of truth -- state is defined by data set in one class
 * following/reading the code is easier because the flow of data is unidirectional
 * testing
@@ -57,7 +56,7 @@ state management. <br/>
 * everything is in an once place -> better understanding
 * immutable ----> threadsafe
 
-##### Disadvantages
+#### Disadvantages
 * boilerplate
 * maybe overkill
 * learning curve
