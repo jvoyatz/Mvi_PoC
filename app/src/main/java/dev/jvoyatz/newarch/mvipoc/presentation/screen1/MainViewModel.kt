@@ -13,8 +13,8 @@ const val FIRST_PAGE = 1
 class MainViewModel constructor(
     private val getMoviesUseCase: GetMoviesUseCase,
     initViewState: MainViewState
-) : BaseViewModel<MainActivityContract.State, MainActivityContract.Event, MainActivityContract.Effect>(
-    MainActivityContract.State(initViewState)
+) : BaseViewModel<MainActivityContract.UiState, MainActivityContract.Event, MainActivityContract.Effect>(
+    MainActivityContract.UiState(initViewState)
 ) {
 
     override fun processEvent(event: MainActivityContract.Event) {

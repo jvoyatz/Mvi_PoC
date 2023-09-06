@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MviPoC"
         tools:targetApi="31">
-<!--
+
         <activity
             android:name=".presentation.screen1.MainActivity"
             android:exported="true"
@@ -25,7 +25,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
--->
 
         <activity
             android:name=".presentation.screen2.MviReduceActivity"

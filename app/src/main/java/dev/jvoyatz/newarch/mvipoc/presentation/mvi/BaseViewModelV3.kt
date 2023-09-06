@@ -34,9 +34,10 @@ abstract class BaseViewModelV3<State: Parcelable, PartialState, Event, Effect>(
 
     init {
         //"1".scan(2) {  myint: Int, myChar: Char ->   myChar.digitToInt() + myint}
+
         viewModelScope.launch {
             _event.flatMapMerge {//takes a new event
-                //after checking what exactly is this event returns a partial state
+                //after checking what exactly is this event returns a partial state -- transformation
                 handleEvent(it)
             }.scan(state.value) { state, newPartialState ->
                 //scan is an alias of runningFold

@@ -1,4 +1,7 @@
 
+
+# What should i use?
+
 **I think that in order to be able to work in a better way, you need to discuss with
 the rest of the team to find or build custom solutions and use them again & again. Maybe one day, you
 wake up and think that it was a bad idea and come with a better solution**
@@ -38,7 +41,7 @@ state management. <br/>
   * acts as a state machine
     * only one state is present/active at a time
   * Redux -> Reducer(has an initial state, some info about what to do with it(action) and then produces a new state)
-    * but can things be simpler? why having a reducer to act as mediator
+    * but can things be simpler? why having a **reducer** to act as mediator
   * need to distinguish content from error (use of another class to handle the effects)
     * why? because in case of an orientation change (or a process death) you will see a again an error dialog/toast
   * imagines user as a function

@@ -19,13 +19,12 @@ object MviReduceContract {
     }
 
     @Parcelize
-    data class MviReduceState(
+    data class MviReduceUiState(
         val isLoading: Boolean = false,
         val movies: List<MovieUiModel> = emptyList(),
-        val isError: Boolean = false
     ): Parcelable {
         override fun toString(): String {
-            return "MviState(isLoading=$isLoading, movies=${movies.size}, isError=$isError)"
+            return "MviState(isLoading=$isLoading, movies=${movies.size})"
         }
     }
 

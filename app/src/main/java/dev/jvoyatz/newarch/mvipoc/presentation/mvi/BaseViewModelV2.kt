@@ -47,11 +47,11 @@ abstract class BaseViewModelV2<State: UiState, Event: UiEvent, Effect: UiEffect>
     fun postEvent(event : Event) {
         val newEvent = event
         viewModelScope.launch {
-            handleEvent(event)
+            processEvent(event)
         }
     }
 
-    abstract fun handleEvent(event: Event)
+    abstract fun processEvent(event: Event)
 
     private fun log(event: Event) = Timber.tag(LOG_TAG).d(LOG_MSG_EVENT, event)
     private fun log(state: State) = Timber.tag(LOG_TAG).d(LOG_MSG_STATE, state)

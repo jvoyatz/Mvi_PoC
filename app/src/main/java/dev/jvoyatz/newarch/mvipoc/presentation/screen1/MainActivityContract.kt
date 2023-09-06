@@ -1,12 +1,8 @@
 package dev.jvoyatz.newarch.mvipoc.presentation.screen1
 
-import android.os.Parcelable
-import dev.jvoyatz.newarch.mvipoc.presentation.screen2.MovieUiModel
 import dev.jvoyatz.newarch.mvipoc.domain.Movie
 import dev.jvoyatz.newarch.mvipoc.presentation.mvi.UiEffect
 import dev.jvoyatz.newarch.mvipoc.presentation.mvi.UiEvent
-import dev.jvoyatz.newarch.mvipoc.presentation.mvi.UiState
-import kotlinx.parcelize.Parcelize
 
 object MainActivityContract {
 
@@ -14,16 +10,13 @@ object MainActivityContract {
      * State is a data class that
      * corresponds to the actual state of UI Elements
      */
-    data class State(
+    data class UiState(
         val mainViewState: MainViewState
-    ) : UiState
+    ) : dev.jvoyatz.newarch.mvipoc.presentation.mvi.UiState
 
     /**
      * holds different states
-     *
-     * You do not have to use data class
      */
-
     sealed class MainViewState {
         object Init : MainViewState()
         object Loading : MainViewState()

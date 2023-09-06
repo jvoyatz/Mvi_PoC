@@ -8,7 +8,6 @@ import dev.jvoyatz.newarch.mvipoc.presentation.screen1.FIRST_PAGE
 import dev.jvoyatz.newarch.mvipoc.presentation.screen2.UiMapper.toUiModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import timber.log.Timber
@@ -16,9 +15,9 @@ import timber.log.Timber
 class MviReduceViewModel constructor(
     private val getMoviesUseCase: GetMoviesUseCaseV3,
     savedStateHandle: SavedStateHandle = SavedStateHandle(),
-) : BaseViewModelV3<MviReduceContract.MviReduceState, MviReduceContract.PartialState, MviReduceContract.Event, MviReduceContract.Effect>(
+) : BaseViewModelV3<MviReduceContract.MviReduceUiState, MviReduceContract.PartialState, MviReduceContract.Event, MviReduceContract.Effect>(
     savedStateHandle,
-    MviReduceContract.MviReduceState()
+    MviReduceContract.MviReduceUiState()
 ) {
 
     init {
@@ -33,21 +32,17 @@ class MviReduceViewModel constructor(
     }
 
     override fun reduceUiState(
-        prevState: MviReduceContract.MviReduceState,
+        prevState: MviReduceContract.MviReduceUiState,
         partialState: MviReduceContract.PartialState
-    ): MviReduceContract.MviReduceState {
+    ): MviReduceContract.MviReduceUiState {
         return when (partialState) {
-            is MviReduceContract.PartialState.Error -> prevState.copy(
-                isLoading = false,
-                isError = true,
-                movies = listOf()
-            ).also {
-                Timber.d("isError")
+            is MviReduceContract.PartialState.Error -> {
+                setEffect { MviReduceContract.Effect.ShowError }
+                prevState
             }
 
             is MviReduceContract.PartialState.FetchedMovies -> prevState.copy(
                 isLoading = false,
-                isError = false,
                 movies = partialState.list
             ).also {
                 Timber.d("fetchedMovies ${partialState.list.size}")
@@ -55,7 +50,6 @@ class MviReduceViewModel constructor(
 
             MviReduceContract.PartialState.Loading -> prevState.copy(
                 isLoading = false,
-                isError = false,
                 movies = listOf()
             ).also {
                 Timber.d("fetchedMovies isLoading = true")
@@ -63,7 +57,6 @@ class MviReduceViewModel constructor(
 
             MviReduceContract.PartialState.NoResults -> prevState.copy(
                 isLoading = false,
-                isError = false,
                 movies = listOf()
             ).also {
                 Timber.d("noResults")

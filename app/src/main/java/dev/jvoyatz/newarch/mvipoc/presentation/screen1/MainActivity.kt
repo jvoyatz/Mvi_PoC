@@ -22,6 +22,8 @@ class MainActivity : AppCompatActivity() {
         ViewModelFactory.create(MainViewModel::class.java)
     }
 
+    private var toast: Toast ?= null
+
     private var currentPosition = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -81,7 +83,10 @@ class MainActivity : AppCompatActivity() {
     private fun handleEffect(binding: ActivityMainBinding, effect: MainActivityContract.Effect) {
         when(effect){
             MainActivityContract.Effect.ShowError -> {
-                Toast.makeText(this, "An error occurred", Toast.LENGTH_LONG).show()
+                toast?.cancel()
+                toast = Toast.makeText(this, "An error occurred", Toast.LENGTH_LONG)
+                toast?.show()
+
                 --currentPosition
                 (binding.recyclerview.adapter as MoviesAdapter).apply {
                     currentList.filter { movie ->
@@ -130,5 +135,13 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        toast?.let {
+            it.cancel()
+        }
+        toast = null
     }
 }

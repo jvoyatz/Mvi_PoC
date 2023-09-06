@@ -8,7 +8,6 @@ import androidx.lifecycle.lifecycleScope
 import dev.jvoyatz.newarch.mvipoc.databinding.ActivityMainReduceBinding
 import dev.jvoyatz.newarch.mvipoc.di.AppFactory
 import dev.jvoyatz.newarch.mvipoc.di.ViewModelFactory
-import dev.jvoyatz.newarch.mvipoc.presentation.screen1.MoviesAdapter
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
@@ -112,12 +111,10 @@ class MviReduceActivity : AppCompatActivity() {
 
     private fun handleMviReducedState(
         binding: ActivityMainReduceBinding,
-        state: MviReduceContract.MviReduceState
+        state: MviReduceContract.MviReduceUiState
     ) {
         Timber.d("handleMviReducedState")
-        if (state.isError) {
-            Toast.makeText(this, "An error occurred", Toast.LENGTH_SHORT).show()
-        } else if (state.isLoading) {
+        if (state.isLoading) {
             renderLoadingState(binding)
         } else if (state.movies.isNotEmpty()) {
             renderResultsState(binding, state.movies)
@@ -142,7 +139,6 @@ class MviReduceActivity : AppCompatActivity() {
 
     private fun renderResultsState(binding: ActivityMainReduceBinding, movies: List<MovieUiModel>) {
         with(binding) {
-
             noResults.visibility = View.GONE
             recyclerview.visibility = View.VISIBLE
             (recyclerview.adapter as MoviesReduceAdapter).apply {

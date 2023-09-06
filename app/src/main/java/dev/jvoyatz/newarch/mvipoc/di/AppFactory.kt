@@ -37,7 +37,6 @@ object AppFactory {
             try {
                 moviesRepository.getMovies(it ?: 1)
             }catch (e: Exception){
-                e.printStackTrace()
                 Outcome.Error(e.message)
             }
         }
@@ -48,7 +47,7 @@ object AppFactory {
         GetMoviesUseCaseV3 {
             moviesRepository.getMoviesFlow(it)
                 .catch {
-                    it.printStackTrace()
+                    //it.printStackTrace()
                     Outcome.Error(it.message)
                 }
         }
