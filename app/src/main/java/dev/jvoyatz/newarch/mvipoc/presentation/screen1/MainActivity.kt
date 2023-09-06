@@ -1,4 +1,4 @@
-package dev.jvoyatz.newarch.mvipoc
+package dev.jvoyatz.newarch.mvipoc.presentation.screen1
 
 
 import android.os.Bundle
@@ -6,10 +6,10 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import dev.jvoyatz.newarch.mvipoc.presentation.screen2.MviReduceViewModel
 import dev.jvoyatz.newarch.mvipoc.databinding.ActivityMainBinding
 import dev.jvoyatz.newarch.mvipoc.di.AppFactory
 import dev.jvoyatz.newarch.mvipoc.di.ViewModelFactory
-import gr.jvoyatz.android.poc.mvi.MoviesAdapter
 import dev.jvoyatz.newarch.mvipoc.domain.Movie
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
@@ -22,25 +22,18 @@ class MainActivity : AppCompatActivity() {
         ViewModelFactory.create(MainViewModel::class.java)
     }
 
-
-    private val viewModelV3: MainViewModelV3 by lazy {
-        ViewModelFactory.createV3(MainViewModelV3::class.java)
-    }
-
     private var currentPosition = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Timber.plant(Timber.DebugTree())
-        AppFactory.initDatabase(this.applicationContext)
+        AppFactory.initDatabase(this)
 
         with(ActivityMainBinding.inflate(layoutInflater)) {
             setContentView(root)
             setupRecyclerView(this)
             setupObservers(this)
         }
-
-
     }
 
 
@@ -70,9 +63,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupObserversV3(binding: ActivityMainBinding){
-        viewModelV3.state
+        viewModel.state()
+            .map {
+                it.mainViewState
+            }
            .onEach {
-                handleMainViewStateV3(binding, it)
+                handleMainViewState(binding, it)
             }
             .launchIn(lifecycleScope)
 
@@ -105,19 +101,6 @@ class MainActivity : AppCompatActivity() {
             MainActivityContract.MainViewState.Loading -> renderLoadingState(binding)
             MainActivityContract.MainViewState.NoResults -> renderNoResultsState(binding)
             is MainActivityContract.MainViewState.Results -> renderResultsState(binding, state.movies)
-        }
-    }
-
-    private fun handleMainViewStateV3(binding: ActivityMainBinding, state: MainActivityContract.MainViewStateV3){
-        Timber.d("handleMainViewState() called with: binding = " + binding + ", state = " + state)
-        if (state.isError){
-
-        }else if(state.isLoading){
-            renderLoadingState(binding)
-        } else if(state.movies.isNotEmpty()) {
-            renderNoResultsState(binding)
-        } else if(state.movies.isEmpty()) {
-
         }
     }
 

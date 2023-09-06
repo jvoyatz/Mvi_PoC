@@ -2,15 +2,17 @@ package dev.jvoyatz.newarch.mvipoc.data.sources.local
 
 import androidx.room.Dao
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Upsert
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface MoviesDao {
+abstract class MoviesDao {
 
     @Query("SELECT * FROM MovieEntity")
-    fun getMovies(): Flow<List<MovieEntity>>
+    abstract fun getMovies(): Flow<List<MovieEntity>>
 
-    @Insert
-    fun insert(movies: List<MovieEntity>)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    abstract suspend fun insertMovies(movies: List<MovieEntity>)
 }

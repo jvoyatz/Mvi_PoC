@@ -1,11 +1,9 @@
 package dev.jvoyatz.newarch.mvipoc.di
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
-import dev.jvoyatz.newarch.mvipoc.MainActivityContract
-import dev.jvoyatz.newarch.mvipoc.MainViewModel
-import dev.jvoyatz.newarch.mvipoc.MainViewModelV3
-import timber.log.Timber
+import dev.jvoyatz.newarch.mvipoc.presentation.screen1.MainActivityContract
+import dev.jvoyatz.newarch.mvipoc.presentation.screen1.MainViewModel
+import dev.jvoyatz.newarch.mvipoc.presentation.screen2.MviReduceViewModel
 
 object ViewModelFactory {
 
@@ -18,8 +16,8 @@ object ViewModelFactory {
     }
 
     fun <T : ViewModel> createV3(modelClass: Class<T>): T {
-        return if (modelClass.isAssignableFrom(MainViewModelV3::class.java)) {
-            MainViewModelV3(AppFactory.getMoviesUseCaseV2) as T
+        return if (modelClass.isAssignableFrom(MviReduceViewModel::class.java)) {
+            MviReduceViewModel(AppFactory.getMoviesUseCaseV2) as T
         } else {
             throw IllegalArgumentException("ViewModel Not Found")
         }

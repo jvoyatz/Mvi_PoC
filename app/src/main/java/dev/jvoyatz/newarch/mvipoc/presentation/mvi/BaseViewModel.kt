@@ -19,11 +19,15 @@ abstract class BaseViewModel<State: UiState, Event: UiEvent, Effect: UiEffect>(
 ): ViewModel(){
 
     companion object{
-        private const val LOG_TAG = "VIEWMODEL"
+        const val LOG_TAG = "VIEWMODEL"
         private const val LOG_MSG_EVENT = "Event: %s"
-        private const val LOG_MSG_STATE = "State: %s"
+        const val LOG_MSG_STATE = "State: %s"
         private const val LOG_MSG_EFFECT = "Effect: %s"
     }
+
+    //when using this, state updates are allowed during event processing
+    //alternative? runningFold
+    //val state = MutableStateFlow(State())
 
     private val state: MutableStateFlow<State> = MutableStateFlow(initialState)
     private val effect: Channel<Effect> = Channel<Effect>()
@@ -34,7 +38,11 @@ abstract class BaseViewModel<State: UiState, Event: UiEvent, Effect: UiEffect>(
 
 
     init {
-        subscribeEvents()
+        viewModelScope.launch {
+            event.collect {
+                processEvent(it)
+            }
+        }
     }
 
     //helper
@@ -63,16 +71,7 @@ abstract class BaseViewModel<State: UiState, Event: UiEvent, Effect: UiEffect>(
             _event.emit(newEvent)
         }
     }
-
-    private fun subscribeEvents(){
-        viewModelScope.launch {
-            event.collect {
-                handleEvent(it)
-            }
-        }
-    }
-
-    abstract fun handleEvent(event: Event)
+    abstract fun processEvent(event: Event)
 
     private fun log(event: Event) = Timber.tag(LOG_TAG).d(LOG_MSG_EVENT, event)
     private fun log(state: State) = Timber.tag(LOG_TAG).d(LOG_MSG_STATE, state)

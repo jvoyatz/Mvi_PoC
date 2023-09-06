@@ -1,4 +1,4 @@
-package gr.jvoyatz.android.poc.mvi
+package dev.jvoyatz.newarch.mvipoc.presentation.screen1
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -14,12 +14,14 @@ import dev.jvoyatz.newarch.mvipoc.databinding.ProgressbarBinding
 import dev.jvoyatz.newarch.mvipoc.domain.Movie
 
 
-class MoviesAdapter(val loadMore: () -> Unit): ListAdapter<Movie, RecyclerView.ViewHolder>(MovieItemDiffCallback) {
+class MoviesAdapter(val loadMore: () -> Unit): ListAdapter<Movie, RecyclerView.ViewHolder>(
+    MovieItemDiffCallback
+) {
 
 
     companion object {
         val TYPE_DATA = 0
-        val TYPE_PROGRESS = 1
+        val TYPE_PROGRESS = -666
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -82,7 +84,6 @@ class MoviesAdapter(val loadMore: () -> Unit): ListAdapter<Movie, RecyclerView.V
 
     object MovieItemDiffCallback: DiffUtil.ItemCallback<Movie>() {
         override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
-            // Id is unique.
             return oldItem.title == newItem.title
         }
 

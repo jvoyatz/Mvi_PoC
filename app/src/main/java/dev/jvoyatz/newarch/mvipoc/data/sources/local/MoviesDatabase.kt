@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import timber.log.Timber
 import java.util.concurrent.Executors
 
-@Database(entities = [MovieEntity::class], version = 1)
+@Database(entities = [MovieEntity::class], version = 2)
 abstract class MoviesDatabase: RoomDatabase() {
     abstract fun moviesDao() : MoviesDao
 

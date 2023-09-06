@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.screen1.MainActivity"
-    >
+    tools:context=".presentation.screen2.MviReduceActivity">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview"
@@ -31,4 +30,5 @@
         android:gravity="center"
         android:visibility="gone"
         android:text="No Results"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

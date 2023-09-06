@@ -6,6 +6,8 @@ import dev.jvoyatz.newarch.mvipoc.domain.GetMoviesUseCase
 import dev.jvoyatz.newarch.mvipoc.outcome.Outcome
 import dev.jvoyatz.newarch.mvipoc.outcome.OutcomeExtensions.toSuccessfulOutcome
 import dev.jvoyatz.newarch.mvipoc.domain.Movie
+import dev.jvoyatz.newarch.mvipoc.presentation.screen1.MainActivityContract
+import dev.jvoyatz.newarch.mvipoc.presentation.screen1.MainViewModel
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk

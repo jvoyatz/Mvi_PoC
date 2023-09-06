@@ -1,23 +1,24 @@
-package dev.jvoyatz.newarch.mvipoc
+package dev.jvoyatz.newarch.mvipoc.presentation.screen1
 
 import androidx.lifecycle.viewModelScope
-import dev.jvoyatz.newarch.mvipoc.MainActivityContract.MainViewState
+import dev.jvoyatz.newarch.mvipoc.presentation.screen1.MainActivityContract.MainViewState
 import dev.jvoyatz.newarch.mvipoc.outcome.OutcomeExtensions.onError
 import dev.jvoyatz.newarch.mvipoc.outcome.OutcomeExtensions.onSuccess
 import dev.jvoyatz.newarch.mvipoc.domain.GetMoviesUseCase
 import dev.jvoyatz.newarch.mvipoc.presentation.mvi.BaseViewModel
 import kotlinx.coroutines.launch
 
+const val FIRST_PAGE = 1
 
-class MainViewModelV2 constructor(
+class MainViewModel constructor(
     private val getMoviesUseCase: GetMoviesUseCase,
     initViewState: MainViewState
 ) : BaseViewModel<MainActivityContract.State, MainActivityContract.Event, MainActivityContract.Effect>(
     MainActivityContract.State(initViewState)
 ) {
 
-    override fun handleEvent(event: MainActivityContract.Event) {
-        when (event) {
+    override fun processEvent(event: MainActivityContract.Event) {
+        when(event){
             is MainActivityContract.Event.Init -> getMovies(FIRST_PAGE)
             is MainActivityContract.Event.GetMovies -> getMovies(event.page)
         }

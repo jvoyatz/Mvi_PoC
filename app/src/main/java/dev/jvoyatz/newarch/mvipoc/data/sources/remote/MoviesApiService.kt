@@ -33,11 +33,11 @@ interface MoviesApiService {
 
                 val retrofit = Retrofit.Builder()
                     .baseUrl("https://api.themoviedb.org/3/")
-                    .client(
+                  /*  .client(
                         OkHttpClient.Builder()
                             .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
                             .build()
-                    )
+                    )*/
                     .addConverterFactory(GsonConverterFactory.create())
                     .build()
                 retrofitService = retrofit.create(MoviesApiService::class.java)

@@ -8,11 +8,16 @@ import dev.jvoyatz.newarch.mvipoc.data.sources.remote.MovieDto
 import dev.jvoyatz.newarch.mvipoc.data.sources.remote.MovieResponse
 import dev.jvoyatz.newarch.mvipoc.data.sources.remote.MoviesApiService
 import dev.jvoyatz.newarch.mvipoc.data.sources.MoviesMappers.dtoToMovies
+import dev.jvoyatz.newarch.mvipoc.data.sources.local.MovieEntity
+import dev.jvoyatz.newarch.mvipoc.data.sources.local.MoviesDao
 import dev.jvoyatz.newarch.mvipoc.domain.GetMoviesUseCase
+import dev.jvoyatz.newarch.mvipoc.presentation.screen1.MainActivityContract
+import dev.jvoyatz.newarch.mvipoc.presentation.screen1.MainViewModel
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.test.runTest
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.ResponseBody

@@ -1,4 +1,4 @@
-package dev.jvoyatz.newarch.mvipoc
+package dev.jvoyatz.newarch.mvipoc.presentation.screen2
 
 import android.os.Parcelable
 import dev.jvoyatz.newarch.mvipoc.domain.Movie

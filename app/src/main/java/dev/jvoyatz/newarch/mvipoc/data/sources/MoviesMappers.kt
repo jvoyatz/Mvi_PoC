@@ -16,6 +16,7 @@ object MoviesMappers {
     fun List<MovieDto>.toEntities() = this.map { it.toEntity() }
 
     private fun MovieDto.toEntity() = MovieEntity(
+        null,
         this.original_title,
         this.poster_path,
         this.overview
@@ -26,7 +27,7 @@ object MoviesMappers {
         poster = this.poster,
         overview = this.overview
     ).apply {
-        this.id = this@toMovie.id
+        this.id = this@toMovie.id ?: 1
     }
 
     fun List<MovieEntity>.entityToMovies() = this.map { it.toMovie() }

@@ -14,14 +14,15 @@ import dev.jvoyatz.newarch.mvipoc.domain.Movie
 import dev.jvoyatz.newarch.mvipoc.outcome.OutcomeExtensions.toSuccessfulOutcome
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onEach
+import timber.log.Timber
 
 const val API_KEY = "e8d648003bd11b5c498674fbd4905525"
 
 class MoviesRepository(
     private val apiService: MoviesApiService
 ) {
-
     //in-memory cache
     private val list = mutableListOf<Movie>()
 
@@ -52,14 +53,17 @@ class MoviesRepository(
             .map {
                 it.entityToMovies()
             }.onEach {
-                if (it.isEmpty()) {
+                if (it.isEmpty() ) {
                     apiService.getTopRatedMovies2(API_KEY, "en-US", position)
                         .results.toEntities().also {
-                            moviesDao.insert(it)
+                            moviesDao.insertMovies(it)
                         }
                 }
             }.map {
                 it.toSuccessfulOutcome()
+            }
+            .onEach {
+                Timber.d("emit!! $it")
             }
     }
 }

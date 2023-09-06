@@ -19,13 +19,12 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
-private const val SAVED_UI_STATE_KEY = "SAVED_STATE_KEY"
+const val SAVED_UI_STATE_KEY = "SAVED_STATE_KEY"
 
 abstract class BaseViewModelV3<State: Parcelable, PartialState, Event, Effect>(
     private val savedStateHandle: SavedStateHandle,
     initialState: State
 ): ViewModel(){
-
     val state = savedStateHandle.getStateFlow(SAVED_UI_STATE_KEY, initialState)
 
     //using sharedflow, because event is dropped in case there is not any subscriber
@@ -34,19 +33,24 @@ abstract class BaseViewModelV3<State: Parcelable, PartialState, Event, Effect>(
     private val effect: Channel<Effect> = Channel<Effect>()
 
     init {
-        subscribeEvents()
-    }
-
-    private fun subscribeEvents() {
+        //"1".scan(2) {  myint: Int, myChar: Char ->   myChar.digitToInt() + myint}
         viewModelScope.launch {
-            _event.flatMapMerge {
+            _event.flatMapMerge {//takes a new event
+                //after checking what exactly is this event returns a partial state
                 handleEvent(it)
             }.scan(state.value) { state, newPartialState ->
-                reduceUiState(state, newPartialState)
-            }.catch {
+                //scan is an alias of runningFold
+                /* .runningFold(state.value) { state, newPartialState ->
+                    reduceUiState(state, newPartialState)
+                }*/
+                reduceUiState(state, newPartialState).also {
+                    println("Current State [$state] --> changed to [$it] because of this partial state [$newPartialState]")
+                }
+            }
+           .catch {
                 Timber.d("exception $it")
             }.collect {
-                savedStateHandle[SAVED_UI_STATE_KEY] = it
+                savedStateHandle[SAVED_UI_STATE_KEY] = it //surviving process death
             }
         }
     }
@@ -75,4 +79,5 @@ abstract class BaseViewModelV3<State: Parcelable, PartialState, Event, Effect>(
         partialState: PartialState
     ): State
 
+    private fun log(state: State) = Timber.tag(BaseViewModel.LOG_TAG).d(BaseViewModel.LOG_MSG_STATE, state)
 }

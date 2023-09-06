@@ -1,7 +1,9 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    kotlin("kapt")
+//    kotlin("kapt")
+    id("com.google.devtools.ksp")
+
     id("kotlin-parcelize")
 }
 
@@ -17,6 +19,16 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments += mapOf(
+                    "room.schemaLocation" to "$projectDir/schemas",
+                    "room.incremental" to "true"
+                )
+            }
+        }
+
     }
 
     buildTypes {
@@ -64,7 +76,8 @@ dependencies {
 
     //Glide
     implementation("com.github.bumptech.glide:glide:4.12.0")
-    kapt("com.github.bumptech.glide:compiler:4.12.0")
+    ksp("com.github.bumptech.glide:ksp:4.14.2")
+
     implementation("com.jakewharton.timber:timber:5.0.1")
     //testimplementation(com.squareup.okhttp3:mockwebserver:4.9.0'
 
@@ -85,10 +98,12 @@ dependencies {
     testImplementation ("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
     testImplementation ("androidx.arch.core:core-testing:2.2.0")
 
-    val room_version = "2.4.3"
+    val room_version = "2.5.2"
 
     implementation("androidx.room:room-runtime:$room_version")
     annotationProcessor("androidx.room:room-compiler:$room_version")
+    ksp("androidx.room:room-compiler:$room_version")
     implementation("androidx.room:room-ktx:$room_version")
-    kapt("androidx.room:room-compiler:$room_version")
+
+
 }
