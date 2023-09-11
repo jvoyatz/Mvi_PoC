@@ -29,7 +29,8 @@ abstract class BaseViewModel<State: UiState, Event: UiEvent, Effect: UiEffect>(
     //alternative? runningFold
     //val state = MutableStateFlow(State())
 
-    private val state: MutableStateFlow<State> = MutableStateFlow(initialState)
+    /*private*/ val state: MutableStateFlow<State> = MutableStateFlow(initialState)
+
     private val effect: Channel<Effect> = Channel<Effect>()
 
     //using sharedflow, because event is dropped in case there is not any subscriber
@@ -45,11 +46,8 @@ abstract class BaseViewModel<State: UiState, Event: UiEvent, Effect: UiEffect>(
         }
     }
 
-    //helper
-    protected val currentState: State
-        get() = state.value
-
     fun state(): StateFlow<State> = state
+    fun effect(): Flow<Effect> = effect.receiveAsFlow()
 
     protected fun setState(reduce: State.() -> State) {
         val newState = state.value.reduce()
@@ -57,7 +55,6 @@ abstract class BaseViewModel<State: UiState, Event: UiEvent, Effect: UiEffect>(
         state.update { newState }
     }
 
-    fun effect(): Flow<Effect> = effect.receiveAsFlow()
 
     protected fun setEffect(builder: () -> Effect) {
         val effectValue = builder()

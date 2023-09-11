@@ -99,6 +99,19 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * interface RenderUi{
+     *      fun render(...)
+     * * }
+     *  object: RenderUi {
+     *
+     *      override fun redner(){
+     *
+     *      ....
+     *      }
+     *  }
+     *
+     */
     private fun handleMainViewState(binding: ActivityMainBinding, state: MainActivityContract.MainViewState){
         Timber.d("handleMainViewState() called with: binding = " + binding + ", state = " + state)
         when(state){

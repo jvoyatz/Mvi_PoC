@@ -6,13 +6,14 @@ import dev.jvoyatz.newarch.mvipoc.outcome.OutcomeExtensions.onError
 import dev.jvoyatz.newarch.mvipoc.outcome.OutcomeExtensions.onSuccess
 import dev.jvoyatz.newarch.mvipoc.domain.GetMoviesUseCase
 import dev.jvoyatz.newarch.mvipoc.presentation.mvi.BaseViewModel
+import dev.jvoyatz.newarch.mvipoc.presentation.mvi.BaseViewModelV2
 import kotlinx.coroutines.launch
 
 
 class MainViewModelV2 constructor(
     private val getMoviesUseCase: GetMoviesUseCase,
     initViewState: MainViewState
-) : BaseViewModel<MainActivityContract.UiState, MainActivityContract.Event, MainActivityContract.Effect>(
+) : BaseViewModelV2<MainActivityContract.UiState, MainActivityContract.Event, MainActivityContract.Effect>(
     MainActivityContract.UiState(initViewState)
 ) {
 

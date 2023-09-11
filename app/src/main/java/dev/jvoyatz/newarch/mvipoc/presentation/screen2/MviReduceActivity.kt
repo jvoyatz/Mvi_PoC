@@ -33,15 +33,13 @@ import timber.log.Timber
  *     onEvent: (MviReduceContract.Event) -> Unit
  * ) {
  *     if (uiState.movies.isNotEmpty()) {
- *         RocketsAvailableContent(
+ *         MoviesContent(
  *             snackbarHostState = snackbarHostState,
  *             uiState = uiState,
- *             onRocketClick = { onIntent(RocketClicked(it)) }
+ *             onMovieClick = { onIntent(MovieClicked(it)) }
  *         )
  *     } else {
- *         RocketsNotAvailableContent(
- *             uiState = uiState
- *         )
+ *         //.....
  *     }
  * }
  *
@@ -55,7 +53,7 @@ import timber.log.Timber
  *     }
  *
  *     MoviesList(
- *         rocketList = uiState.rockets,
+ *         moviesList = uiState.movies,
  *         onMovieClick = onMovieClick,
  *     )
  * }

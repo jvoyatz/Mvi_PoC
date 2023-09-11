@@ -36,6 +36,7 @@ class MviReduceViewModel constructor(
         partialState: MviReduceContract.PartialState
     ): MviReduceContract.MviReduceUiState {
         return when (partialState) {
+
             is MviReduceContract.PartialState.Error -> {
                 setEffect { MviReduceContract.Effect.ShowError }
                 prevState
@@ -49,7 +50,7 @@ class MviReduceViewModel constructor(
             }
 
             MviReduceContract.PartialState.Loading -> prevState.copy(
-                isLoading = false,
+                isLoading = true,
                 movies = listOf()
             ).also {
                 Timber.d("fetchedMovies isLoading = true")

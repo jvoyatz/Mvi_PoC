@@ -40,10 +40,6 @@ abstract class BaseViewModelV3<State: Parcelable, PartialState, Event, Effect>(
                 //after checking what exactly is this event returns a partial state -- transformation
                 handleEvent(it)
             }.scan(state.value) { state, newPartialState ->
-                //scan is an alias of runningFold
-                /* .runningFold(state.value) { state, newPartialState ->
-                    reduceUiState(state, newPartialState)
-                }*/
                 reduceUiState(state, newPartialState).also {
                     println("Current State [$state] --> changed to [$it] because of this partial state [$newPartialState]")
                 }

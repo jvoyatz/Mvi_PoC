@@ -11,7 +11,7 @@ object MainActivityContract {
      * corresponds to the actual state of UI Elements
      */
     data class UiState(
-        val mainViewState: MainViewState
+        val mainViewState: MainViewState,
     ) : dev.jvoyatz.newarch.mvipoc.presentation.mvi.UiState
 
     /**
