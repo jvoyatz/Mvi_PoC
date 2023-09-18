@@ -34,8 +34,18 @@ class MainViewModelIntegrationTest {
 
 
     private val apiService: MoviesApiService = mockk()
-    private val moviesRepository: MoviesRepository = MoviesRepository(apiService)
-    private val getMoviesUseCaseMock: GetMoviesUseCase = GetMoviesUseCase {
+    private val fakeMoviesDao: MoviesDao = object : MoviesDao() {
+        override fun getMovies(): Flow<List<MovieEntity>> {
+            TODO("Not yet implemented")
+        }
+
+        override suspend fun insertMovies(movies: List<MovieEntity>) {
+            TODO("Not yet implemented")
+        }
+
+    }
+    private val moviesRepository: MoviesRepository = MoviesRepository(apiService, fakeMoviesDao)
+    private val getMoviesUseCase: GetMoviesUseCase = GetMoviesUseCase {
         moviesRepository.getMovies(it)
     }
     private val initMainViewState = MainActivityContract.MainViewState.Init
@@ -46,7 +56,7 @@ class MainViewModelIntegrationTest {
     @Before
     fun setup() {
         sut = MainViewModel(
-            getMoviesUseCaseMock,
+            getMoviesUseCase,
             initMainViewState
         )
     }

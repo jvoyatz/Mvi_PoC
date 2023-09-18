@@ -21,13 +21,11 @@ import timber.log.Timber
 const val API_KEY = "e8d648003bd11b5c498674fbd4905525"
 
 class MoviesRepository(
-    private val apiService: MoviesApiService
+    private val apiService: MoviesApiService,
+    private val moviesDao: MoviesDao,
 ) {
     //in-memory cache
     private val list = mutableListOf<Movie>()
-
-
-    private val moviesDao: MoviesDao = AppFactory.moviesDao
 
     suspend fun getMovies(position: Int): Outcome<List<Movie>> {
         return outcomeFromApiCall {

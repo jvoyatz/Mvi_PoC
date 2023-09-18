@@ -21,12 +21,14 @@ class TestDispatcherRule @OptIn(ExperimentalCoroutinesApi::class) constructor(
 ) : TestWatcher() {
 
     override fun starting(description: Description) {
+        println("starting")
         Dispatchers.setMain(testDispatcher)
     }
 
     override fun finished(description: Description) {
         super.finished(description)
         Dispatchers.resetMain()
+        println("finished")
     }
 }
 

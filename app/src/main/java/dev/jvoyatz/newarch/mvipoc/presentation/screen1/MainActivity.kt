@@ -49,27 +49,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupObservers(binding: ActivityMainBinding){
-//        viewModel.state()
-//            .map {
-//                it.mainViewState
-//            }.onEach {
-//                handleMainViewState(binding, it)
-//            }
-//            .launchIn(lifecycleScope)
-//
-//
-//        viewModel.effect().onEach {
-//            handleEffect(binding, it)
-//        }.launchIn(lifecycleScope)
-        setupObserversV3(binding)
-    }
-
-    private fun setupObserversV3(binding: ActivityMainBinding){
         viewModel.state()
             .map {
                 it.mainViewState
-            }
-           .onEach {
+            }.onEach {
                 handleMainViewState(binding, it)
             }
             .launchIn(lifecycleScope)
@@ -78,8 +61,8 @@ class MainActivity : AppCompatActivity() {
         viewModel.effect().onEach {
             handleEffect(binding, it)
         }.launchIn(lifecycleScope)
-    }
 
+    }
     private fun handleEffect(binding: ActivityMainBinding, effect: MainActivityContract.Effect) {
         when(effect){
             MainActivityContract.Effect.ShowError -> {

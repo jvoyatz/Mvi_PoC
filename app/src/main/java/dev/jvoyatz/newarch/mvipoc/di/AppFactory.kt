@@ -17,7 +17,7 @@ object AppFactory {
     }
 
     private val moviesRepository by lazy {
-        MoviesRepository(moviesApiService)
+        MoviesRepository(moviesApiService, moviesDao)
     }
 
     private lateinit var database: MoviesDatabase

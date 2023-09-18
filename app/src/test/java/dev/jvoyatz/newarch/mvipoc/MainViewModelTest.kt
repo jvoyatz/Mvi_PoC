@@ -2,6 +2,7 @@ package dev.jvoyatz.newarch.mvipoc
 
 import app.cash.turbine.test
 import com.google.common.truth.Truth
+import dev.jvoyatz.newarch.mvipoc.TestUtils.runWithTestDispatcher
 import dev.jvoyatz.newarch.mvipoc.domain.GetMoviesUseCase
 import dev.jvoyatz.newarch.mvipoc.outcome.Outcome
 import dev.jvoyatz.newarch.mvipoc.outcome.OutcomeExtensions.toSuccessfulOutcome
@@ -11,6 +12,7 @@ import dev.jvoyatz.newarch.mvipoc.presentation.screen1.MainViewModel
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
+import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
@@ -52,12 +54,28 @@ class MainViewModelTest {
         }
     }
 
+
+    /**
+     * class UseCase{
+     *      override fun operator invoke() {
+     *
+     *      }
+     *
+     *      fun execute(){
+     *
+     *      }
+     * }
+     *
+     * val useCase = UseCase()
+     * useCase.invoke()
+     * useCase()
+     */
     @Test
-    fun `when handling init event then get movies`() = runTest {
+    fun `when handling init event then get movies`() = runWithTestDispatcher {
         //given
         //no setup needed
         val event = MainActivityContract.Event.Init
-        coEvery { getMoviesUseCaseMock(any()) } returns Outcome.Success(listOf())
+        coEvery { getMoviesUseCaseMock.invoke(any())} returns Outcome.Success(listOf())
 
         //when
         sut.postEvent(event)
@@ -89,6 +107,7 @@ class MainViewModelTest {
 
         //when
         sut.state().test {
+            // is not an actual UIState
             sut.postEvent(event)
             skipItems(1)
             val emittedState = awaitItem().mainViewState
