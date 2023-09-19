@@ -1,6 +1,9 @@
 package dev.jvoyatz.newarch.mvipoc.di
 
 import android.content.Context
+import androidx.fragment.app.FragmentActivity
+import dev.jvoyatz.newarch.mvipoc.AppDispatchers
+import dev.jvoyatz.newarch.mvipoc.DispatcherProvider
 import dev.jvoyatz.newarch.mvipoc.data.MoviesRepository
 import dev.jvoyatz.newarch.mvipoc.data.sources.local.MoviesDao
 import dev.jvoyatz.newarch.mvipoc.data.sources.local.MoviesDatabase
@@ -8,6 +11,7 @@ import dev.jvoyatz.newarch.mvipoc.data.sources.remote.MoviesApiService
 import dev.jvoyatz.newarch.mvipoc.domain.GetMoviesUseCase
 import dev.jvoyatz.newarch.mvipoc.domain.GetMoviesUseCaseV3
 import dev.jvoyatz.newarch.mvipoc.outcome.Outcome
+import dev.jvoyatz.newarch.mvipoc.presentation.screen2.MviReduceActivity
 import kotlinx.coroutines.flow.catch
 
 object AppFactory {
@@ -42,6 +46,11 @@ object AppFactory {
         }
     }
 
+    val dispatcherProvider: DispatcherProvider
+        get() = AppDispatchers()
+
+    //private val actionHandler
+
 
     val getMoviesUseCaseV2 by lazy {
         GetMoviesUseCaseV3 {
@@ -52,4 +61,7 @@ object AppFactory {
                 }
         }
     }
+
+
+
 }

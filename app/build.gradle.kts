@@ -5,6 +5,7 @@ plugins {
     id("com.google.devtools.ksp")
 
     id("kotlin-parcelize")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -106,4 +107,11 @@ dependencies {
     implementation("androidx.room:room-ktx:$room_version")
 
 
+
+    val nav_version = "2.7.2"
+    implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
+    implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
+
+    implementation("com.google.dagger:hilt-android:2.44")
+    ksp("com.google.dagger:hilt-compiler:2.48")
 }

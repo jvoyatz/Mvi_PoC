@@ -30,11 +30,7 @@ object MviReduceContract {
 
     sealed class PartialState{
         data object Loading: PartialState()
-        data class FetchedMovies(val list: List<MovieUiModel>): PartialState() {
-            override fun toString(): String {
-                return "FetchedMovies(list=${list.size})"
-            }
-        }
+        data class FetchedMovies(val list: List<MovieUiModel>): PartialState()
         data object NoResults: PartialState()
         data class Error(val message :String): PartialState()
     }
