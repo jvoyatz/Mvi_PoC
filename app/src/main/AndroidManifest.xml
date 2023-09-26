@@ -6,6 +6,7 @@
 
     <application
         android:allowBackup="true"
+        android:name=".refactor.MoviesApplication"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
@@ -14,8 +15,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MviPoC"
         tools:targetApi="31">
-
         <activity
+            android:name=".refactor.MoviesActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <!--
+            <activity
             android:name=".presentation.screen1.MainActivity"
             android:exported="true"
             android:icon="@color/black">
@@ -25,8 +35,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity
+        -->
+<!--        <activity
             android:name=".presentation.screen2.MviReduceActivity"
             android:exported="true"
             android:icon="@color/white">
@@ -35,7 +45,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
+        </activity>-->
     </application>
 
 </manifest>
