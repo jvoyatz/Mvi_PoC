@@ -3,6 +3,7 @@ package dev.jvoyatz.newarch.mvipoc
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestDispatcher
 import kotlinx.coroutines.test.TestResult
 import kotlinx.coroutines.test.TestScope
@@ -41,7 +42,7 @@ object TestUtils {
      */
     @OptIn(ExperimentalCoroutinesApi::class)
     fun runWithTestDispatcher(
-        testDispatcher: TestDispatcher = UnconfinedTestDispatcher(),
+        testDispatcher: TestDispatcher = StandardTestDispatcher(),
         test: suspend TestScope.() -> Unit,
     ): TestResult {
         Dispatchers.setMain(testDispatcher)

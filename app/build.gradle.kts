@@ -3,23 +3,24 @@ plugins {
     id("org.jetbrains.kotlin.android")
 //    kotlin("kapt")
     id("com.google.devtools.ksp")
+    id("com.google.dagger.hilt.android")
 
     id("kotlin-parcelize")
-    id("com.google.dagger.hilt.android")
+    id("androidx.navigation.safeargs")
 }
 
 android {
     namespace = "dev.jvoyatz.newarch.mvipoc"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "dev.jvoyatz.newarch.mvipoc"
         minSdk = 28
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "dev.jvoyatz.newarch.mvipoc.HiltTestRunner"
 
         javaCompileOptions {
             annotationProcessorOptions {
@@ -52,7 +53,12 @@ android {
     buildFeatures {
         viewBinding = true
     }
+
+    ksp {
+        arg("room.schemaLocation", "$projectDir/schemas")
+    }
 }
+
 
 dependencies {
 
@@ -92,12 +98,13 @@ dependencies {
     testImplementation("com.google.truth:truth:1.1.4")
     testImplementation("io.mockk:mockk:1.13.7")
     testImplementation("junit:junit:4.13.2")
-    testImplementation("androidx.fragment:fragment-testing:1.6.1")
+    debugImplementation("androidx.fragment:fragment-testing:1.6.1")
     testImplementation("androidx.test:core-ktx:1.5.0")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     testImplementation ("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
     testImplementation ("androidx.arch.core:core-testing:2.2.0")
+    testImplementation("com.squareup.okhttp3:mockwebserver:4.11.0")
 
     val room_version = "2.5.2"
 
@@ -112,6 +119,21 @@ dependencies {
     implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
     implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
 
-    implementation("com.google.dagger:hilt-android:2.44")
-    ksp("com.google.dagger:hilt-compiler:2.48")
+    implementation("com.google.dagger:hilt-android:2.48")
+    ksp("com.google.dagger:hilt-android-compiler:2.48")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-savedstate:2.6.2")
+
+    val fragment_version = "1.6.1"
+
+    debugImplementation("androidx.fragment:fragment-testing:$fragment_version")
+
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    androidTestImplementation("androidx.test:runner:1.5.2")
+    androidTestImplementation("androidx.test:rules:1.5.0")
+
+    androidTestImplementation("com.google.dagger:hilt-android-testing:2.48")
+    kspAndroidTest("com.google.dagger:hilt-android-compiler:2.48")
+    testAnnotationProcessor("com.google.dagger:hilt-android-compiler:2.48")
+    androidTestAnnotationProcessor("com.google.dagger:hilt-android-compiler:2.48")
 }
+
