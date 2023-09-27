@@ -5,9 +5,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import kotlin.properties.Delegates
 import kotlin.properties.ReadWriteProperty
 
 /**
@@ -23,12 +28,23 @@ abstract class BaseViewModel<State: UiState, Action: UiAction, Mutation: UiMutat
     private val savedStateKey: String,
     initialState: State
 ): ViewModel(){
-    init {
-        Timber.d("savedStateHandle ${savedStateHandle.get<State>(savedStateKey)}")
+    //adb shell adb am kill pkgName
+
+    private var observableState by Delegates.observable(initialState) { _, old, new ->
+        if(old != new){
+            Timber.w("received something new..updating")
+            viewModelScope.launch {
+                //_uiState.update { new }
+                savedStateHandle[savedStateKey] = new
+            }
+        }
     }
+
 //    private val _uiState: MutableStateFlow<State> = MutableStateFlow(initialState)
 //    val state = _uiState.asStateFlow()
+
     val state = savedStateHandle.getStateFlow(savedStateKey, initialState)
+
     private val _events: Channel<Event> = Channel(Channel.BUFFERED)
     val events = _events.receiveAsFlow()
 
@@ -39,9 +55,14 @@ abstract class BaseViewModel<State: UiState, Action: UiAction, Mutation: UiMutat
         println("mutation $mutation")
         log(mutation)
         with(mutation.reduce(state.value)){
-            println("mutation $this")
-            savedStateHandle[savedStateKey] = this
+            //when using a Simple MutableStateFlow
             //_uiState.update { state }
+
+            //when using Kotlin's observable property
+            observableState = this
+
+            //when using savedStateHandle
+            //savedStateHandle[savedStateKey] = this
             log(this)
         }
     }

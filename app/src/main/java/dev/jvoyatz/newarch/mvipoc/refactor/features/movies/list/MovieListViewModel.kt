@@ -22,6 +22,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flow
+import timber.log.Timber
 import javax.inject.Inject
 
 const val MOVIES_SAVED_STATE_KEY = "moviesSavedStateKey!"
@@ -41,7 +42,6 @@ class MovieListViewModel @Inject constructor(
 
     //1st approach
     override fun mapAction(action: MoviesAction): Flow<UiMutationPair<MoviesActionResult?, MoviesEvent?>> = flow {
-        println("callled!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
         when(action) {
             MoviesAction.Initialize -> getMovies(position)
             is MoviesAction.GetMovies -> getMovies(++position)
