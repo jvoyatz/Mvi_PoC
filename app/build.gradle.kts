@@ -20,7 +20,8 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        testInstrumentationRunner = "dev.jvoyatz.newarch.mvipoc.HiltTestRunner"
+        testInstrumentationRunner = "dev.jvoyatz.newarch.mvipoc.TestRunner"
+
 
         javaCompileOptions {
             annotationProcessorOptions {
@@ -123,17 +124,31 @@ dependencies {
     ksp("com.google.dagger:hilt-android-compiler:2.48")
     implementation("androidx.lifecycle:lifecycle-viewmodel-savedstate:2.6.2")
 
-    val fragment_version = "1.6.1"
-
-    debugImplementation("androidx.fragment:fragment-testing:$fragment_version")
-
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     androidTestImplementation("androidx.test:runner:1.5.2")
     androidTestImplementation("androidx.test:rules:1.5.0")
 
     androidTestImplementation("com.google.dagger:hilt-android-testing:2.48")
     kspAndroidTest("com.google.dagger:hilt-android-compiler:2.48")
-    testAnnotationProcessor("com.google.dagger:hilt-android-compiler:2.48")
-    androidTestAnnotationProcessor("com.google.dagger:hilt-android-compiler:2.48")
+//    testAnnotationProcessor("com.google.dagger:hilt-android-compiler:2.48")
+//    androidTestAnnotationProcessor("com.google.dagger:hilt-android-compiler:2.48")
+
+    // To use the androidx.test.core APIs
+    androidTestImplementation("androidx.test:core:1.5.0")
+    // Kotlin extensions for androidx.test.core
+    androidTestImplementation("androidx.test:core-ktx:1.5.0")
+    // To use the androidx.test.espresso
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    androidTestImplementation("androidx.test.espresso:espresso-contrib:3.5.1")
+    // To use the JUnit Extension APIs
+    androidTestImplementation("androidx.test.ext:junit:1.1.5")
+    // Kotlin extensions for androidx.test.ext.junit
+    androidTestImplementation("androidx.test.ext:junit-ktx:1.1.5")
+    // To use the Truth Extension APIs
+    androidTestImplementation("androidx.test.ext:truth:1.5.0")
+    // To use the androidx.test.runner APIs
+    androidTestImplementation("androidx.test:runner:1.5.2")
+    // To use android test orchestrator
+    androidTestUtil("androidx.test:orchestrator:1.4.2")
 }
 
